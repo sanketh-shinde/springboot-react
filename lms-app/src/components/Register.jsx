@@ -1,67 +1,38 @@
 import { useState } from "react";
-import { registerUser } from "../services/authService";
-import { useNavigate } from "react-router-dom";
+
+import AdminRegister from "./AdminRegister";
+import UserRegister from "./UserRegister";
+
+import "../styles/Register.css";
 
 const Register = () => {
-  const initialState = {
-    name: "",
-    mobileNumber: "",
-    emailId: "",
-    password: "",
-  };
+  const [role, setRole] = useState(null);
 
-  const [user, setUser] = useState(initialState);
-  const navigate = useNavigate();
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    registerUser(user)
-      .then((response) => {
-        console.log(response.data);
-        navigate("/login");
-      })
-      .catch((error) => console.log(error));
+  const handleRoleSelection = (selectedRole) => {
+    setRole(selectedRole);
   };
 
   return (
-    <>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Name:
-          <input
-            type="text"
-            value={user.name}
-            onChange={(e) => setUser({ ...user, name: e.target.value })}
-          />
-        </label>
-        <label>
-          Mobile Number:
-          <input
-            type="number"
-            value={user.mobileNumber}
-            onChange={(e) => setUser({ ...user, mobileNumber: e.target.value })}
-          />
-        </label>
-        <label>
-          Email Id
-          <input
-            type="email"
-            value={user.emailId}
-            onChange={(e) => setUser({ ...user, emailId: e.target.value })}
-          />
-        </label>
-        <label>
-          Password:
-          <input
-            type="password"
-            value={user.password}
-            onChange={(e) => setUser({ ...user, password: e.target.value })}
-          />
-        </label>
+    <div className="role-selection-container">
+      <h1>Register</h1>
+      <div className="button-container">
+        <button
+          className="role-button"
+          onClick={() => handleRoleSelection("admin")}
+        >
+          Register as Admin
+        </button>
+        <button
+          className="role-button"
+          onClick={() => handleRoleSelection("user")}
+        >
+          Register as User
+        </button>
+      </div>
 
-        <input type="submit" value="Register" />
-      </form>
-    </>
+      {role === "admin" && <AdminRegister />}
+      {role === "user" && <UserRegister />}
+    </div>
   );
 };
 

@@ -1,6 +1,9 @@
 import { useState } from "react";
-import { loginUser } from "../services/authService";
+import { useDispatch } from "react-redux";
+
 import { useNavigate } from "react-router-dom";
+
+import "../styles/Register.css";
 
 const Login = () => {
   const initialState = {
@@ -9,21 +12,26 @@ const Login = () => {
   };
 
   const [formData, setFormData] = useState(initialState);
+
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    loginUser(formData)
-      .then((response) => {
-        console.log(response.data);
-        localStorage.setItem("token", response.data);
-        navigate("/books");
-      })
-      .catch((error) => console.log(error));
+    dispatch({
+      type: "user/fetchUserRequest",
+      payload: {
+        ...formData,
+        emailId: formData.emailId,
+        password: formData.password,
+      },
+    });
+    navigate("/books");
   };
 
   return (
-    <>
+    <div className="role-selection-container">
+      <h2>Login</h2>
       <form onSubmit={handleSubmit}>
         <label>
           Email Id
@@ -33,6 +41,7 @@ const Login = () => {
             onChange={(e) =>
               setFormData({ ...formData, emailId: e.target.value })
             }
+            required
           />
         </label>
         <label>
@@ -43,12 +52,12 @@ const Login = () => {
             onChange={(e) =>
               setFormData({ ...formData, password: e.target.value })
             }
+            required
           />
         </label>
-
         <input type="submit" value="Login" />
       </form>
-    </>
+    </div>
   );
 };
 

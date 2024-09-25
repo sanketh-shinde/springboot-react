@@ -2,8 +2,6 @@ package com.sanketh.lms.dto;
 
 import lombok.*;
 
-import java.util.Set;
-
 @Getter
 @Setter
 @NoArgsConstructor
@@ -15,5 +13,6 @@ public class UserDTO {
     private String name;
     private String emailId;
     private String mobileNumber;
+    private String roles;
 
 }

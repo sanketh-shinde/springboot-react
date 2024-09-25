@@ -1,29 +1,39 @@
-import { useEffect, useState } from "react";
-import getAllBooks from "../services/bookService";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchBooksRequest } from "../features/book/bookSlice";
+
+import "../styles/Books.css";
 
 const Books = () => {
-  const [books, setBooks] = useState([]);
+  const { books, isLoading, bookError } = useSelector((state) => state.book);
+  const { isAuthenticated, user, userError } = useSelector(
+    (state) => state.user
+  );
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    getAllBooks()
-      .then((response) => {
-        // console.log(response.data);
-        setBooks(response.data);
-      })
-      .catch((error) => console.log(error));
-  }, []);
+    dispatch(fetchBooksRequest());
+  }, [dispatch]);
 
   return (
     <>
-      {books.map((book) => (
-        <ul key={book.id}>
-          <li>
-            <h2>{book.name}</h2>
-            <p>{book.author}</p>
-            <p>{book.price}</p>
-          </li>
-        </ul>
-      ))}
+      {isLoading && <p>Loading...</p>}
+      {!isLoading && bookError ? <p>{bookError}</p> : null}
+      {!isLoading && books ? (
+        <div className="books-container">
+          <h1>Book List</h1>
+          <ul className="books-list">
+            {books.map((book) => (
+              <li key={book.id} className="book-item">
+                <h2 className="book-title">{book.name}</h2>
+                <p className="book-author">{book.author}</p>
+                <p className="book-price">Rs. {book.price}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
     </>
   );
 };
