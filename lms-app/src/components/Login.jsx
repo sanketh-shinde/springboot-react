@@ -22,11 +22,9 @@ const Login = () => {
       type: "user/fetchUserRequest",
       payload: {
         ...formData,
-        emailId: formData.emailId,
-        password: formData.password,
       },
+      navigate: navigate("/books"),
     });
-    navigate("/books");
   };
 
   return (
