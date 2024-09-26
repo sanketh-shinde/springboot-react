@@ -14,4 +14,6 @@ public interface UserService extends UserDetailsService {
 
     ResponseEntity<?> updateUserPassword(String emailId, String password, String newPassword);
 
+    ResponseEntity<?> updateUser(User user);
+
 }

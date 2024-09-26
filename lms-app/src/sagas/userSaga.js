@@ -5,9 +5,8 @@ import { fetchUserError, fetchUserSuccess } from "../features/user/userSlice";
 const fetchUserApi = async (user) => {
   try {
     const response = await loginUser(user);
-    localStorage.setItem("token", response.data.token);
+    localStorage.setItem("user", JSON.stringify(response.data));
     console.log(response.data);
-
     return response.data;
   } catch (error) {
     return console.log(error);

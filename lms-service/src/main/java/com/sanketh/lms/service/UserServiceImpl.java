@@ -131,4 +131,23 @@ public class UserServiceImpl implements UserService {
                 .body("Wrong Credentials. Please Check");
     }
 
+    @Override
+    public ResponseEntity<?> updateUser(User user) {
+        user.setPassword(encoder.encode(user.getPassword()));
+        User savedUser = userRepository.save(user);
+
+        if (savedUser.getId() != null) {
+            UserDTO userDTO = modelMapper.map(savedUser, UserDTO.class);
+            log.info("User updated: {}", userDTO);
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(userDTO);
+        }
+
+        log.info("Something Went Wrong");
+
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body("Something Went Wrong");
+    }
 }

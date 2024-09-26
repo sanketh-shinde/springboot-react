@@ -23,7 +23,7 @@ const Login = () => {
       payload: {
         ...formData,
       },
-      navigate: navigate("/books"),
+      navigate: () => navigate("/books"),
     });
   };
 
