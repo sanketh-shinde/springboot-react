@@ -25,11 +25,6 @@ public class UserServiceImpl implements UserService {
 
     private ModelMapper modelMapper;
 
-    private User login(String emailId, String password) {
-        return userRepository.findByEmailIdAndPassword(emailId, password)
-                .orElseThrow(() -> new UserNotFoundException("User does not exists"));
-    }
-
     @Override
     public UserDetails loadUserByUsername(String emailId) throws UsernameNotFoundException {
         return (UserDetails) userRepository.findByEmailId(emailId)
@@ -59,23 +54,25 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseEntity<?> loginUser(String emailId, String password) {
-        User fetchedUser = login(emailId, password);
+    public ResponseEntity<?> updateUser(User user) {
+        User fetchedUser = userRepository.findById(user.getId())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        user.setPassword(fetchedUser.getPassword());
+        User savedUser = userRepository.save(user);
 
-        if (fetchedUser.getId() != null) {
-            UserDTO userDTO = modelMapper.map(fetchedUser, UserDTO.class);
-            log.info("User Fetched: {}", userDTO);
-
+        if (savedUser.getId() != null) {
+            UserDTO userDTO = modelMapper.map(savedUser, UserDTO.class);
+            log.info("User updated: {}", userDTO);
             return ResponseEntity
-                    .status(HttpStatus.FOUND)
+                    .status(HttpStatus.OK)
                     .body(userDTO);
         }
 
-        log.info("Wrong Credentials");
+        log.info("Something Went Wrong");
 
         return ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
-                .body("Wrong Credentials Please Check");
+                .status(HttpStatus.BAD_REQUEST)
+                .body("Something Went Wrong");
     }
 
 //    @Override
@@ -108,46 +105,27 @@ public class UserServiceImpl implements UserService {
 //                .body("Wrong Credentials. Please Check");
 //    }
 
-    @Override
-    public ResponseEntity<?> updateUserPassword(String emailId, String password, String newPassword) {
-        User fetchedUser = login(emailId, password);
+//    @Override
+//    public ResponseEntity<?> updateUserPassword(String emailId, String password, String newPassword) {
+//        User fetchedUser = login(emailId, password);
+//
+//        if (fetchedUser.getId() != null) {
+//            fetchedUser.setEmailId(newPassword);
+//            User user = userRepository.save(fetchedUser);
+//            UserDTO userDTO = modelMapper.map(user, UserDTO.class);
+//
+//            log.info("Updated Password Successfully: {}", userDTO);
+//
+//            return ResponseEntity
+//                    .status(HttpStatus.OK)
+//                    .body(userDTO);
+//        }
+//
+//        log.info("Wrong Credentials, Try Again");
+//
+//        return ResponseEntity
+//                .status(HttpStatus.NOT_FOUND)
+//                .body("Wrong Credentials. Please Check");
+//    }
 
-        if (fetchedUser.getId() != null) {
-            fetchedUser.setEmailId(newPassword);
-            User user = userRepository.save(fetchedUser);
-            UserDTO userDTO = modelMapper.map(user, UserDTO.class);
-
-            log.info("Updated Password Successfully: {}", userDTO);
-
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(userDTO);
-        }
-
-        log.info("Wrong Credentials, Try Again");
-
-        return ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
-                .body("Wrong Credentials. Please Check");
-    }
-
-    @Override
-    public ResponseEntity<?> updateUser(User user) {
-        user.setPassword(encoder.encode(user.getPassword()));
-        User savedUser = userRepository.save(user);
-
-        if (savedUser.getId() != null) {
-            UserDTO userDTO = modelMapper.map(savedUser, UserDTO.class);
-            log.info("User updated: {}", userDTO);
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(userDTO);
-        }
-
-        log.info("Something Went Wrong");
-
-        return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .body("Something Went Wrong");
-    }
 }

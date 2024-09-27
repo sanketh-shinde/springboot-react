@@ -14,8 +14,6 @@ const AdminRegister = () => {
   const [admin, setAdmin] = useState(initialState);
   const navigate = useNavigate();
 
-  console.log(admin);
-
   const handleSubmit = (e) => {
     e.preventDefault();
     registerUser(admin)

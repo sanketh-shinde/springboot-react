@@ -55,7 +55,7 @@ public class BookServiceImpl implements BookService {
 
         log.info("No Books Available");
 
-        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+        return ResponseEntity.status(HttpStatus.NO_CONTENT)
                 .body("No Books Available");
     }
 

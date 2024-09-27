@@ -1,9 +1,13 @@
 import { useEffect, useState } from "react";
 import "../styles/Profile.css";
 import { useSelector } from "react-redux";
+import { user } from "../services/authService";
+import { Link } from "react-router-dom";
 
 const Profile = () => {
-  const initialState = JSON.parse(localStorage.getItem("user"));
+  const { isAuthenticated } = useSelector((state) => state.user);
+
+  const initialState = user();
 
   const [localUser, setLocalUser] = useState(initialState);
 
@@ -16,7 +20,7 @@ const Profile = () => {
         ...userDetails,
       }));
 
-      // userDetails.token == localUser.token ? !isAuthenticated : isAuthenticated;
+      userDetails.token == localUser.token ? !isAuthenticated : isAuthenticated;
     }
   }, []);
 
@@ -35,7 +39,9 @@ const Profile = () => {
             <strong>Phone No:</strong> {localUser.userDTO.mobileNumber}
           </p>
         </div>
-        <button className="profile-button">Edit Profile</button>
+        <Link to="/profile/edit-profile" className="profile-button">
+          Edit Profile
+        </Link>
       </div>
     </>
   );

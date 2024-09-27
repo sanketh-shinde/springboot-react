@@ -18,7 +18,7 @@ const UserRegister = () => {
     e.preventDefault();
     registerUser(user)
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         navigate("/login");
       })
       .catch((error) => console.log(error));

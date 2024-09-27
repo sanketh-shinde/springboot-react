@@ -1,14 +1,20 @@
 import { useEffect, useState } from "react";
+import { user } from "../services/authService";
+
+import { updateUser } from "../services/userService";
+
 import "../styles/Profile.css";
-import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const EditProfile = () => {
-  const initialState = JSON.parse(localStorage.getItem("user"));
-  const [localUser, setLocalUser] = useState(initialState);
-  const [isEditing, setIsEditing] = useState(false);
+  const navigate = useNavigate();
+  const initialState = user();
+
+  const [localUser, setLocalUser] = useState(initialState.userDTO);
 
   useEffect(() => {
-    const userDetails = JSON.parse(localStorage.getItem("user"));
+    const userDetails = initialState.userDTO;
+    console.log("local", localUser);
 
     if (userDetails) {
       setLocalUser((prevUser) => ({
@@ -22,72 +28,63 @@ const EditProfile = () => {
     const { name, value } = e.target;
     setLocalUser((prevUser) => ({
       ...prevUser,
-      userDTO: {
-        ...prevUser.userDTO,
-        [name]: value,
-      },
+      [name]: value,
     }));
   };
 
-  const handleSave = () => {
-    localStorage.setItem("user", JSON.stringify(localUser));
-    setIsEditing(false);
+  const handleSave = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await updateUser(localUser);
+      console.log(response.data);
+
+      const updatedUser = {
+        token: initialState.token,
+        userDTO: response.data,
+      };
+      localStorage.setItem("user", JSON.stringify(updatedUser));
+      navigate("/profile");
+    } catch (error) {
+      console.error("Error updating user:", error);
+    }
   };
 
   return (
-    <div className="profile-container">
-      <h1 className="profile-title">Edit Profile</h1>
-      <div className="profile-info">
-        <div className="profile-item">
-          <strong>Name:</strong>
-          {isEditing ? (
+    <>
+      <form className="profile-container" onSubmit={handleSave}>
+        <h1 className="profile-title">Edit Profile</h1>
+        <div className="profile-info">
+          <div className="profile-item">
+            <strong>Name:</strong>
             <input
               type="text"
               name="name"
-              value={localUser.userDTO.name}
+              value={localUser.name}
               onChange={handleChange}
             />
-          ) : (
-            <span>{localUser.userDTO.name}</span>
-          )}
-        </div>
-        <div className="profile-item">
-          <strong>Email:</strong>
-          {isEditing ? (
+          </div>
+          <div className="profile-item">
+            <strong>Email:</strong>
             <input
               type="email"
               name="emailId"
-              value={localUser.userDTO.emailId}
+              value={localUser.emailId}
               onChange={handleChange}
             />
-          ) : (
-            <span>{localUser.userDTO.emailId}</span>
-          )}
-        </div>
-        <div className="profile-item">
-          <strong>Phone No:</strong>
-          {isEditing ? (
+          </div>
+          <div className="profile-item">
+            <strong>Mobile No:</strong>
             <input
-              type="text"
+              type="tel"
               name="mobileNumber"
-              value={localUser.userDTO.mobileNumber}
+              value={localUser.mobileNumber}
               onChange={handleChange}
             />
-          ) : (
-            <span>{localUser.userDTO.mobileNumber}</span>
-          )}
+          </div>
         </div>
-      </div>
-      {isEditing ? (
-        <button className="profile-button" onClick={handleSave}>
-          Save Changes
-        </button>
-      ) : (
-        <button className="profile-button" onClick={() => setIsEditing(true)}>
-          Edit Profile
-        </button>
-      )}
-    </div>
+        <button className="profile-button">Save Changes</button>
+      </form>
+    </>
   );
 };
 

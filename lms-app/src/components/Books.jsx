@@ -3,8 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchBooksRequest } from "../features/book/bookSlice";
 
 import "../styles/Books.css";
+import { user } from "../services/authService";
 
 const Books = () => {
+  const userDetails = user();
   const { books, isLoading, bookError } = useSelector((state) => state.book);
 
   const dispatch = useDispatch();
@@ -30,7 +32,9 @@ const Books = () => {
             ))}
           </ul>
         </div>
-      ) : null}
+      ) : (
+        <h1>No Books Available</h1>
+      )}
     </>
   );
 };
