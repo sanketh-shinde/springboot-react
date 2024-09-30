@@ -12,6 +12,8 @@ public interface BookService {
 
     ResponseEntity<?> getBookByName(String bookName);
 
+    ResponseEntity<?> fetchById(Integer id);
+
     ResponseEntity<?> updateBook(Book book);
 
     ResponseEntity<?> deleteBook(Integer id);

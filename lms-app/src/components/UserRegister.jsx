@@ -2,6 +2,8 @@ import { useState } from "react";
 import { registerUser } from "../services/authService";
 import { useNavigate } from "react-router-dom";
 
+import "../styles/AdminRegistration.css";
+
 const UserRegister = () => {
   const initialState = {
     name: "",
@@ -18,7 +20,6 @@ const UserRegister = () => {
     e.preventDefault();
     registerUser(user)
       .then((response) => {
-        // console.log(response.data);
         navigate("/login");
       })
       .catch((error) => console.log(error));
@@ -28,42 +29,52 @@ const UserRegister = () => {
     <div className="register-form-container">
       <h2>User Registration</h2>
       <form onSubmit={handleSubmit}>
-        <label>
-          Name:
-          <input
-            type="text"
-            value={user.name}
-            onChange={(e) => setUser({ ...user, name: e.target.value })}
-            required
-          />
-        </label>
-        <label>
-          Mobile Number:
-          <input
-            type="tel"
-            value={user.mobileNumber}
-            onChange={(e) => setUser({ ...user, mobileNumber: e.target.value })}
-            required
-          />
-        </label>
-        <label>
-          Email Id:
-          <input
-            type="email"
-            value={user.emailId}
-            onChange={(e) => setUser({ ...user, emailId: e.target.value })}
-            required
-          />
-        </label>
-        <label>
-          Password:
-          <input
-            type="password"
-            value={user.password}
-            onChange={(e) => setUser({ ...user, password: e.target.value })}
-            required
-          />
-        </label>
+        <div>
+          <label>
+            Name:
+            <input
+              type="text"
+              value={user.name}
+              onChange={(e) => setUser({ ...user, name: e.target.value })}
+              required
+            />
+          </label>
+        </div>
+        <div>
+          <label>
+            Mobile Number:
+            <input
+              type="tel"
+              value={user.mobileNumber}
+              onChange={(e) =>
+                setUser({ ...user, mobileNumber: e.target.value })
+              }
+              required
+            />
+          </label>
+        </div>
+        <div>
+          <label>
+            Email Id:
+            <input
+              type="email"
+              value={user.emailId}
+              onChange={(e) => setUser({ ...user, emailId: e.target.value })}
+              required
+            />
+          </label>
+        </div>
+        <div>
+          <label>
+            Password:
+            <input
+              type="password"
+              value={user.password}
+              onChange={(e) => setUser({ ...user, password: e.target.value })}
+              required
+            />
+          </label>
+        </div>
         <input
           type="text"
           value={(user.roles = "ROLE_USER")}

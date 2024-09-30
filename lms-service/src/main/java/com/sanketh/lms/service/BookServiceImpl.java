@@ -8,7 +8,6 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -79,6 +78,13 @@ public class BookServiceImpl implements BookService {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body("Book not found");
 
+    }
+
+    @Override
+    public ResponseEntity<?> fetchById(Integer id) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(bookRepository.findById(id)
+                        .orElseThrow(() -> new BookNotFoundException("Book not found")));
     }
 
     @Override

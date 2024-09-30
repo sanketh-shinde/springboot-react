@@ -15,7 +15,7 @@ const Register = () => {
   return (
     <div className="role-selection-container">
       <h1>Register</h1>
-      <div className="button-container">
+      <div className="register-button-container">
         <button
           className="role-button"
           onClick={() => handleRoleSelection("admin")}

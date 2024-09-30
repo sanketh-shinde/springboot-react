@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { user } from "../services/authService";
+import { useNavigate } from "react-router-dom";
 
 import { updateUser } from "../services/userService";
 
-import "../styles/Profile.css";
-import { useNavigate } from "react-router-dom";
+import "../styles/EditProfile.css";
 
 const EditProfile = () => {
   const navigate = useNavigate();
@@ -51,38 +51,41 @@ const EditProfile = () => {
 
   return (
     <>
-      <form className="profile-container" onSubmit={handleSave}>
-        <h1 className="profile-title">Edit Profile</h1>
-        <div className="profile-info">
-          <div className="profile-item">
-            <strong>Name:</strong>
+      <form className="edit-profile-container" onSubmit={handleSave}>
+        <h1 className="edit-profile-title">Edit Profile</h1>
+        <div className="edit-profile-info">
+          <div className="edit-profile-item">
+            <label>Name:</label>
             <input
               type="text"
               name="name"
-              value={localUser.name}
+              value={localUser.name || ""}
               onChange={handleChange}
+              required
             />
           </div>
-          <div className="profile-item">
-            <strong>Email:</strong>
+          <div className="edit-profile-item">
+            <label>Email:</label>
             <input
               type="email"
               name="emailId"
-              value={localUser.emailId}
+              value={localUser.emailId || ""}
               onChange={handleChange}
+              required
             />
           </div>
-          <div className="profile-item">
-            <strong>Mobile No:</strong>
+          <div className="edit-profile-item">
+            <label>Mobile No:</label>
             <input
               type="tel"
               name="mobileNumber"
-              value={localUser.mobileNumber}
+              value={localUser.mobileNumber || ""}
               onChange={handleChange}
+              required
             />
           </div>
         </div>
-        <button className="profile-button">Save Changes</button>
+        <button className="edit-profile-button">Save Changes</button>
       </form>
     </>
   );

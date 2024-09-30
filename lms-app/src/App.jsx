@@ -16,6 +16,7 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="books" element={<Books />} />
           <Route path="books/create-book" element={<CreateBook />} />
+          <Route path="books/update-book/:id" element={<CreateBook />} />
           <Route path="profile" element={<Profile />} />
           <Route path="profile/edit-profile" element={<EditProfile />} />
         </Route>

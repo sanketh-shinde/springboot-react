@@ -29,6 +29,12 @@ public class BookController {
         return bookService.getAllBooks();
     }
 
+    @GetMapping("/getById/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    public ResponseEntity<?> getById(@PathVariable Integer id) {
+        return bookService.fetchById(id);
+    }
+
     @GetMapping("/get/{bookName}")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ResponseEntity<?> getBookByName(@PathVariable String bookName) {
@@ -46,5 +52,6 @@ public class BookController {
     public ResponseEntity<?> delete(@PathVariable Integer id) {
         return bookService.deleteBook(id);
     }
+
 }
 

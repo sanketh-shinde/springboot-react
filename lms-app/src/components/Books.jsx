@@ -1,10 +1,11 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchBooksRequest } from "../features/book/bookSlice";
+import { deleteBook, fetchBooksRequest } from "../features/book/bookSlice";
 
 import "../styles/Books.css";
 import { user } from "../services/authService";
 import { useNavigate } from "react-router-dom";
+import { deleteBookById } from "../services/bookService";
 
 const Books = () => {
   const navigate = useNavigate();
@@ -17,6 +18,15 @@ const Books = () => {
   useEffect(() => {
     dispatch(fetchBooksRequest());
   }, [dispatch]);
+
+  const handleDelete = (id) => {
+    deleteBookById(id)
+      .then((response) => {
+        console.log(response.data);
+        dispatch(deleteBook(id));
+      })
+      .catch((error) => console.log(error));
+  };
 
   return (
     <>
@@ -37,29 +47,31 @@ const Books = () => {
       {!isLoading && books ? (
         <div className="books-container">
           <h1 className="books-header">Book List</h1>
-          <ul className="books-list">
+          <div className="books-grid">
             {books.map((book) => (
-              <li key={book.id} className="book-item">
+              <div key={book.id} className="book-item">
                 <h2 className="book-title">{book.name}</h2>
                 <p className="book-author">{book.author}</p>
                 <p className="book-price">Rs. {book.price}</p>
-                <div className="book-actions">
-                  <button
-                    className="update-btn"
-                    onClick={() => navigate(`/books/update/${book.id}`)}
-                  >
-                    Update
-                  </button>
-                  <button
-                    className="delete-btn"
-                    onClick={() => handleDelete(book.id)}
-                  >
-                    Delete
-                  </button>
-                </div>
-              </li>
+                {role === "ROLE_ADMIN" && (
+                  <div className="book-actions">
+                    <button
+                      className="update-btn"
+                      onClick={() => navigate(`/books/update-book/${book.id}`)}
+                    >
+                      Update
+                    </button>
+                    <button
+                      className="delete-btn"
+                      onClick={() => handleDelete(book.id)}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                )}
+              </div>
             ))}
-          </ul>
+          </div>
         </div>
       ) : (
         <h1 className="no-books">No Books Available</h1>

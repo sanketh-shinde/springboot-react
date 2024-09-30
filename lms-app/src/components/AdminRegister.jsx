@@ -2,6 +2,8 @@ import { useState } from "react";
 import { registerUser } from "../services/authService";
 import { useNavigate } from "react-router-dom";
 
+import "../styles/AdminRegistration.css";
+
 const AdminRegister = () => {
   const initialState = {
     name: "",
@@ -28,50 +30,60 @@ const AdminRegister = () => {
     <div className="register-form-container">
       <h2>Admin Registration</h2>
       <form onSubmit={handleSubmit}>
-        <label>
-          Name:
+        <div>
+          <label>
+            Name:
+            <input
+              type="text"
+              value={admin.name}
+              onChange={(e) => setAdmin({ ...admin, name: e.target.value })}
+              required
+            />
+          </label>
+        </div>
+        <div>
+          <label>
+            Mobile Number:
+            <input
+              type="tel"
+              value={admin.mobileNumber}
+              onChange={(e) =>
+                setAdmin({ ...admin, mobileNumber: e.target.value })
+              }
+              required
+            />
+          </label>
+        </div>
+        <div>
+          <label>
+            Email Id:
+            <input
+              type="email"
+              value={admin.emailId}
+              onChange={(e) => setAdmin({ ...admin, emailId: e.target.value })}
+              required
+            />
+          </label>
+        </div>
+        <div>
+          <label>
+            Password:
+            <input
+              type="password"
+              value={admin.password}
+              onChange={(e) => setAdmin({ ...admin, password: e.target.value })}
+              required
+            />
+          </label>
+        </div>
+        <div>
           <input
             type="text"
-            value={admin.name}
-            onChange={(e) => setAdmin({ ...admin, name: e.target.value })}
-            required
+            value={(admin.roles = "ROLE_ADMIN")}
+            onChange={(e) => setAdmin({ ...admin, roles: e.target.value })}
+            hidden
           />
-        </label>
-        <label>
-          Mobile Number:
-          <input
-            type="tel"
-            value={admin.mobileNumber}
-            onChange={(e) =>
-              setAdmin({ ...admin, mobileNumber: e.target.value })
-            }
-            required
-          />
-        </label>
-        <label>
-          Email Id:
-          <input
-            type="email"
-            value={admin.emailId}
-            onChange={(e) => setAdmin({ ...admin, emailId: e.target.value })}
-            required
-          />
-        </label>
-        <label>
-          Password:
-          <input
-            type="password"
-            value={admin.password}
-            onChange={(e) => setAdmin({ ...admin, password: e.target.value })}
-            required
-          />
-        </label>
-        <input
-          type="text"
-          value={(admin.roles = "ROLE_ADMIN")}
-          onChange={(e) => setAdmin({ ...admin, roles: e.target.value })}
-          hidden
-        />
+        </div>
         <input type="submit" value="Register Admin" />
       </form>
     </div>

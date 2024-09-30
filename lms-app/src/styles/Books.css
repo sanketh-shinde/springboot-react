@@ -5,7 +5,7 @@
 }
 
 .add-book-btn {
-  background-color: #4caf50;
+  background-color: #4a90e2;
   color: white;
   padding: 10px 15px;
   border: none;
@@ -16,11 +16,11 @@
 }
 
 .add-book-btn:hover {
-  background-color: #45a049;
+  background-color: #3489eb;
 }
 
 .books-container {
-  max-width: 600px;
+  max-width: 1200px;
   margin: 20px auto;
   padding: 20px;
   border: 1px solid #ccc;
@@ -35,9 +35,10 @@
   color: #333;
 }
 
-.books-list {
-  list-style-type: none;
-  padding: 0;
+.books-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
 }
 
 .book-item {
@@ -45,7 +46,6 @@
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 15px;
-  margin-bottom: 15px;
   transition: box-shadow 0.3s;
 }
 
@@ -54,19 +54,19 @@
 }
 
 .book-title {
-  font-size: 22px;
+  font-size: 18px;
   color: #007bff;
   margin: 0;
 }
 
 .book-author {
-  font-size: 18px;
+  font-size: 16px;
   color: #555;
   margin: 5px 0;
 }
 
 .book-price {
-  font-size: 18px;
+  font-size: 16px;
   color: #333;
   margin-bottom: 10px;
 }

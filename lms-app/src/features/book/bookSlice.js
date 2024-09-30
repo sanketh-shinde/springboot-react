@@ -22,9 +22,16 @@ const bookSlice = createSlice({
       state.books = [];
       state.error = action.payload;
     },
+    deleteBook: (state, action) => {
+      state.books = state.books.filter((book) => book.id !== action.payload);
+    },
   },
 });
 
 export default bookSlice.reducer;
-export const { fetchBooksRequest, fetchBooksSuccess, fetchBooksError } =
-  bookSlice.actions;
+export const {
+  fetchBooksRequest,
+  fetchBooksSuccess,
+  fetchBooksError,
+  deleteBook,
+} = bookSlice.actions;
