@@ -1,10 +1,10 @@
 import axios from "axios";
 
-const axiosInstance = axios.create({
+const bookAxiosInstance = axios.create({
   baseURL: "http://localhost:8081/api/books",
 });
 
-axiosInstance.interceptors.request.use(
+bookAxiosInstance.interceptors.request.use(
   (config) => {
     const user = JSON.parse(localStorage.getItem("user"));
     console.log(user);
@@ -21,7 +21,7 @@ axiosInstance.interceptors.request.use(
   }
 );
 
-axiosInstance.interceptors.response.use(
+bookAxiosInstance.interceptors.response.use(
   (response) => {
     if (response.status == 302) {
       console.log(response.data);
@@ -45,4 +45,4 @@ axiosInstance.interceptors.response.use(
   }
 );
 
-export default axiosInstance;
+export default bookAxiosInstance;

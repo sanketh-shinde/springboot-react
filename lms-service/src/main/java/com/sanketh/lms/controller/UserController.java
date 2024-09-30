@@ -23,9 +23,4 @@ public class UserController {
         return userService.updateUser(user);
     }
 
-//    @PatchMapping("/updateEmail/{emailId}")
-//    public void updateEmail(@PathVariable String emailId) {
-//        userService.updateUserEmail(emailId);
-//    }
-
 }

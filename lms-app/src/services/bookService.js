@@ -1,3 +1,6 @@
-import axiosInstance from "../interceptors/bookInterceptor";
+import bookAxiosInstance from "../interceptors/bookInterceptor";
 
-export const getAllBooks = async () => await axiosInstance.get("/get");
+export const getAllBooks = async () => await bookAxiosInstance.get("/get");
+
+export const createBook = async (book) =>
+  await bookAxiosInstance.post("/create", book);

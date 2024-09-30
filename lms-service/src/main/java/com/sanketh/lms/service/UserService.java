@@ -8,10 +8,6 @@ public interface UserService extends UserDetailsService {
 
     ResponseEntity<?> registerUser(User user);
 
-    //ResponseEntity<?> updateUserEmail(String emailId);
-
-//    ResponseEntity<?> updateUserPassword(String emailId, String password, String newPassword);
-
     ResponseEntity<?> updateUser(User user);
 
 }
