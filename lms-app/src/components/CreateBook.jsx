@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
-import "../styles/CreateBook.css";
+import { useEffect, useState } from "react";
 import { createBook, fetchById, updateBookById } from "../services/bookService";
 import { useNavigate, useParams } from "react-router-dom";
+
+import "../styles/CreateBook.css";
 
 const CreateBook = () => {
   const { id } = useParams();
@@ -44,6 +45,7 @@ const CreateBook = () => {
       ? await updateBookById(book)
           .then((response) => {
             console.log(response.data);
+
             return response.data;
           })
           .catch((error) => {
@@ -53,6 +55,7 @@ const CreateBook = () => {
       : await createBook(book)
           .then((response) => {
             console.log(response.data);
+
             return response.data;
           })
           .catch((error) => {
@@ -63,54 +66,56 @@ const CreateBook = () => {
   };
 
   return (
-    <div className="form-container">
-      {id ? <h2>Update Book</h2> : <h2>Add a New Book</h2>}
-      <form onSubmit={handleSubmit}>
-        <input type="text" value={book.id} onChange={handleChange} hidden />
-        <div className="form-group">
-          <label>Name:</label>
-          <input
-            type="text"
-            name="name"
-            value={book.name}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label>Author:</label>
-          <input
-            type="text"
-            name="author"
-            value={book.author}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label>Price:</label>
-          <input
-            type="number"
-            name="price"
-            value={book.price}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label>Available:</label>
-          <input
-            type="checkbox"
-            name="isAvailable"
-            checked={book.isAvailable}
-            onChange={handleChange}
-          />
-        </div>
-        <button type="submit" className="submit-button">
-          {id ? "Update Book" : "Add a New Book"}
-        </button>
-      </form>
-    </div>
+    <>
+      <div className="form-container">
+        <h2>{id ? "Update Book" : "Add a New Book"} </h2>
+        <form onSubmit={handleSubmit}>
+          <input type="text" value={book.id} onChange={handleChange} hidden />
+          <div className="form-group">
+            <label>Name:</label>
+            <input
+              type="text"
+              name="name"
+              value={book.name}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>Author:</label>
+            <input
+              type="text"
+              name="author"
+              value={book.author}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>Price:</label>
+            <input
+              type="number"
+              name="price"
+              value={book.price}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>Available:</label>
+            <input
+              type="checkbox"
+              name="isAvailable"
+              checked={book.isAvailable}
+              onChange={handleChange}
+            />
+          </div>
+          <button type="submit" className="submit-button">
+            {id ? "Update Book" : "Add Book"}
+          </button>
+        </form>
+      </div>
+    </>
   );
 };
 

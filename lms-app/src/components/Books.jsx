@@ -1,16 +1,16 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteBook, fetchBooksRequest } from "../features/book/bookSlice";
-
-import "../styles/Books.css";
 import { user } from "../services/authService";
 import { useNavigate } from "react-router-dom";
 import { deleteBookById } from "../services/bookService";
 
+import "../styles/Books.css";
+
 const Books = () => {
   const navigate = useNavigate();
   const userDetails = user();
-  const role = userDetails.userDTO.roles;
+  const { roles: role, isAvailable } = userDetails.userDTO;
   const { books, isLoading, bookError } = useSelector((state) => state.book);
 
   const dispatch = useDispatch();
@@ -53,6 +53,7 @@ const Books = () => {
                 <h2 className="book-title">{book.name}</h2>
                 <p className="book-author">{book.author}</p>
                 <p className="book-price">Rs. {book.price}</p>
+                <p>{!isAvailable ? "Available" : "Not Available"}</p>
                 {role === "ROLE_ADMIN" && (
                   <div className="book-actions">
                     <button

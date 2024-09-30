@@ -3,6 +3,9 @@ import { useDispatch } from "react-redux";
 
 import { useNavigate } from "react-router-dom";
 
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import "../styles/AdminRegistration.css";
 
 const Login = () => {
@@ -59,6 +62,7 @@ const Login = () => {
         </div>
         <input type="submit" value="Login" />
       </form>
+      <ToastContainer />
     </div>
   );
 };

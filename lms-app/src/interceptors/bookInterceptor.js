@@ -7,7 +7,6 @@ const bookAxiosInstance = axios.create({
 bookAxiosInstance.interceptors.request.use(
   (config) => {
     const user = JSON.parse(localStorage.getItem("user"));
-    console.log(user);
 
     if (user.token) {
       config.headers["Authorization"] = `Bearer ${user.token}`;
