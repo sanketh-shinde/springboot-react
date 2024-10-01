@@ -2,8 +2,6 @@ import { useState } from "react";
 import { registerUser } from "../services/authService";
 import { useNavigate } from "react-router-dom";
 
-import "../styles/AdminRegistration.css";
-
 const AdminRegister = () => {
   const initialState = {
     name: "",

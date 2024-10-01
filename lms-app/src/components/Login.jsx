@@ -3,8 +3,6 @@ import { useDispatch } from "react-redux";
 
 import { useNavigate } from "react-router-dom";
 
-import "../styles/AdminRegistration.css";
-
 const Login = () => {
   const initialState = {
     emailId: "",
