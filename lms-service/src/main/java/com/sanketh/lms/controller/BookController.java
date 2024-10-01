@@ -24,7 +24,7 @@ public class BookController {
     }
 
     @GetMapping("/get")
-//    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ResponseEntity<?> get() {
         return bookService.getAllBooks();
     }
