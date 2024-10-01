@@ -1,6 +1,7 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import "../styles/Navbar.css";
 import { user } from "../services/authService";
+
+import "../styles/Navbar.css";
 
 const Navbar = () => {
   const userDetasils = user();

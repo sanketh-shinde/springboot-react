@@ -35,7 +35,7 @@ public class BookController {
         return bookService.fetchById(id);
     }
 
-    @GetMapping("/get/{bookName}")
+    @GetMapping("search?name=${name}")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ResponseEntity<?> getBookByName(@PathVariable String bookName) {
         return bookService.getBookByName(bookName);

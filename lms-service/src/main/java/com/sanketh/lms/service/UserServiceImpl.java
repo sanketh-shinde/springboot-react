@@ -2,7 +2,6 @@ package com.sanketh.lms.service;
 
 import com.sanketh.lms.dto.UserDTO;
 import com.sanketh.lms.entity.User;
-import com.sanketh.lms.exception.UserNotFoundException;
 import com.sanketh.lms.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
