@@ -10,7 +10,7 @@ import "../styles/Books.css";
 const Books = () => {
   const navigate = useNavigate();
   const userDetails = user();
-  const { roles: role, isAvailable } = userDetails.userDTO;
+  const { roles: role } = userDetails.userDTO;
   const { books, isLoading, bookError } = useSelector((state) => state.book);
 
   const dispatch = useDispatch();
@@ -53,7 +53,7 @@ const Books = () => {
                 <h2 className="book-title">{book.name}</h2>
                 <p className="book-author">{book.author}</p>
                 <p className="book-price">Rs. {book.price}</p>
-                <p>{!isAvailable ? "Available" : "Not Available"}</p>
+                <p>{book.available ? "Available" : "Not Available"}</p>
                 {role === "ROLE_ADMIN" && (
                   <div className="book-actions">
                     <button

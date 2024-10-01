@@ -14,7 +14,7 @@ const CreateBook = () => {
     name: "",
     author: "",
     price: "",
-    isAvailable: true,
+    available: true,
   });
 
   useEffect(() => {
@@ -29,13 +29,16 @@ const CreateBook = () => {
           console.log(error);
           return error;
         });
-  }, []);
+  }, [id]);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setBook({
-      ...book,
-      [name]: type === "checkbox" ? checked : value,
+    setBook((prevBook) => {
+      const updatedBook = {
+        ...prevBook,
+        [name]: type === "checkbox" ? checked : value,
+      };
+      return updatedBook;
     });
   };
 
@@ -45,7 +48,6 @@ const CreateBook = () => {
       ? await updateBookById(book)
           .then((response) => {
             console.log(response.data);
-
             return response.data;
           })
           .catch((error) => {
@@ -55,7 +57,6 @@ const CreateBook = () => {
       : await createBook(book)
           .then((response) => {
             console.log(response.data);
-
             return response.data;
           })
           .catch((error) => {
@@ -105,8 +106,8 @@ const CreateBook = () => {
             <label>Available:</label>
             <input
               type="checkbox"
-              name="isAvailable"
-              checked={book.isAvailable}
+              name="available"
+              checked={book.available}
               onChange={handleChange}
             />
           </div>

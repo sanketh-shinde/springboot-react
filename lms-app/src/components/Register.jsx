@@ -30,8 +30,7 @@ const Register = () => {
         </button>
       </div>
 
-      {role === "admin" && <AdminRegister />}
-      {role === "user" && <UserRegister />}
+      {role === "admin" ? <AdminRegister /> : <UserRegister />}
     </div>
   );
 };

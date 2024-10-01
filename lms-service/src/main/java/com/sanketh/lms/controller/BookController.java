@@ -24,7 +24,7 @@ public class BookController {
     }
 
     @GetMapping("/get")
-    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+//    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ResponseEntity<?> get() {
         return bookService.getAllBooks();
     }
@@ -35,7 +35,7 @@ public class BookController {
         return bookService.fetchById(id);
     }
 
-    @GetMapping("search?name=${name}")
+    @GetMapping("/get/{bookName}")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ResponseEntity<?> getBookByName(@PathVariable String bookName) {
         return bookService.getBookByName(bookName);
